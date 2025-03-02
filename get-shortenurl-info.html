@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>단축 url 단건 정보 조회</title>
+  </head>
+  <body>
+    <form onsubmit="getShortenUrlInfo(); return false;">
+      <input id="shortenurl-key" required type="text" />
+      <input type="submit" />
+    </form>
+    <div id="shortenurl-info"></div>
+    <script>
+      function getShortenUrlInfo() {
+        const shortenurlKey = document.querySelector("#shortenurl-key").value;
+   
+        const host = "http://localhost:8080";
+        fetch(`${host}/shorten-urls/${shortenurlKey}`, {
+          method: "GET"
+        })
+          .then((response) => {
+            if (response.status === 200) {
+              response.json().then((data) => {
+                const createdShortenurlDom = document.querySelector(
+                  "#shortenurl-info"
+                );
+                createdShortenurlDom.innerText = `
+                  원본 url : ${data.originalUrl}
+                  단축 url key : ${data.shortenedUrlKey}
+                  사용 횟수 : ${data.redirectCount}
+                `
+             
+              });
+            } else {
+              alert("요청이 실패했습니다.");
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+
+        return false;
+      }
+    </script>
+  </body>
+</html>
