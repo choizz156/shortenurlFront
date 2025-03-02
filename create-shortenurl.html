@@ -7,7 +7,6 @@
     <link href="/bootstrap.min.css" rel="stylesheet" />
   </head>
   <body>
-   
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
         <button
@@ -43,31 +42,44 @@
         </div>
       </div>
     </nav>
-    
-    <div class="container-fluid" style="width: 400px">
+
+    <div
+      style="
+     
+        min-height: 60dvh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: -100px;
+      "
+    >
       <form onsubmit="createShortenUrl(); return false;">
         <label class="form-label" for="url-input">url 입력</label>
         <input
-            class="form-control"
-            id="url-input"
-            placeholder="http(s)://www.example.com"
-            type="url"
-        />
-        <button class="btn btn-primary" style="margin-top: 10px" type="submit">Submit</button>
-      </form>
-      <input
-          aria-label="Disabled input example"
+            style="width: 400px"
           class="form-control"
-          disabled
-          id="created_shortenurl"
-          readonly
-          style="margin-top: 10px";"
-          type="text"
-          value="단축된 url"
+          id="url-input"
+          placeholder="http(s)://www.example.com"
+          type="url"
+        />
+        <button class="btn btn-primary" style="margin-top: 10px" type="submit">
+          Submit
+        </button>
+      </form>
+    </div>
+    <div class="container-fluid" id="shortenurl-info" style="width: 430px; margin-top: -200px">
+      <table class="table table-success table-striped-columns">
+      <input
+        aria-label="Disabled input example"
+        class="form-control"
+        disabled
+        id="created_shortenurl"
+        readonly
+        style="margin-top: 10px"
+        type="text"
+        value="단축된 url"
       />
     </div>
-
-
 
     <script>
       function createShortenUrl() {
