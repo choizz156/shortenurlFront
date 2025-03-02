@@ -3,13 +3,71 @@
   <head>
     <meta charset="UTF-8" />
     <title>단축 url 생성</title>
+    <link href="/style.css" rel="stylesheet" />
+    <link href="/bootstrap.min.css" rel="stylesheet" />
   </head>
   <body>
-    <form onsubmit="return createShortenUrl()">
-      <input id="url-input" type="url" />
-      <input type="submit" />
-    </form>
-    <span id="created_shortenurl"></span>
+   
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <button
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+          class="navbar-toggler"
+          data-bs-target="#navbarSupportedContent"
+          data-bs-toggle="collapse"
+          type="button"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a
+                aria-current="page"
+                class="nav-link active"
+                href="/create-shortenurl.html"
+                >url 생성</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                aria-current="page"
+                class="nav-link active"
+                href="/get-shortenurl-info.html"
+                >단건 정보 조회</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    
+    <div class="container-fluid" style="width: 400px">
+      <form onsubmit="createShortenUrl(); return false;">
+        <label class="form-label" for="url-input">url 입력</label>
+        <input
+            class="form-control"
+            id="url-input"
+            placeholder="http(s)://www.example.com"
+            type="url"
+        />
+        <button class="btn btn-primary" type="submit">Submit</button>
+      </form>
+      <input
+          aria-label="Disabled input example"
+          class="form-control"
+          disabled
+          id="created_shortenurl"
+          readonly
+          type="text"
+          value="단축된 url"
+      />
+    </div>
+
+
+
     <script>
       function createShortenUrl() {
         const url = document.querySelector("#url-input").value;
@@ -25,12 +83,17 @@
           .then((response) => {
             if (response.status === 201) {
               response.json().then((data) => {
-                console.log(data)
-                const createdShortenurlDom = document.querySelector("#created_shortenurl");
-                createdShortenurlDom.innerText = window.location.protocol + "//"
-                    + window.location.hostname + ":8080/" + data.shortenedUrlKey;
-                
-              })
+                console.log(data);
+                const createdShortenurlDom = document.querySelector(
+                  "#created_shortenurl"
+                );
+                createdShortenurlDom.value =
+                  window.location.protocol +
+                  "//" +
+                  window.location.hostname +
+                  ":8080/" +
+                  data.shortenedUrlKey;
+              });
             } else {
               alert("요청이 실패했습니다.");
             }
@@ -42,5 +105,8 @@
         return false;
       }
     </script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="index.js"></script>
+    <script src="bootstrap.bundle.min.js"></script>
   </body>
 </html>

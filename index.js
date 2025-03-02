@@ -1,1 +1,9 @@
-console.log('Happy developing ✨')
+Vue.createApp({
+  data(){
+    return {
+
+    }
+  }
+});
+
+

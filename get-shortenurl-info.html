@@ -3,33 +3,80 @@
   <head>
     <meta charset="UTF-8" />
     <title>단축 url 단건 정보 조회</title>
+    <link href="/style.css" rel="stylesheet" />
+    <link href="/bootstrap.min.css" rel="stylesheet" />
   </head>
   <body>
-    <form onsubmit="getShortenUrlInfo(); return false;">
-      <input id="shortenurl-key" required type="text" />
-      <input type="submit" />
-    </form>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <button
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+          class="navbar-toggler"
+          data-bs-target="#navbarSupportedContent"
+          data-bs-toggle="collapse"
+          type="button"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a
+                aria-current="page"
+                class="nav-link active"
+                href="/create-shortenurl.html"
+                >url 생성</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                aria-current="page"
+                class="nav-link active"
+                href="/get-shortenurl-info.html"
+                >단건 정보 조회</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid" style="width: 400px">
+      <form onsubmit="getShortenUrlInfo(); return false;">
+        <label class="form-label" for="shortenurl-key"
+          >shorten url 키 입력</label
+        >
+        <input
+          class="form-control"
+          id="shortenurl-key"
+          placeholder="shorten url key"
+          type="text"
+        />
+        <button class="btn btn-primary" type="submit">Submit</button>
+      </form>
+    </div>
+
     <div id="shortenurl-info"></div>
     <script>
       function getShortenUrlInfo() {
         const shortenurlKey = document.querySelector("#shortenurl-key").value;
-   
+
         const host = "http://localhost:8080";
         fetch(`${host}/shorten-urls/${shortenurlKey}`, {
-          method: "GET"
+          method: "GET",
         })
           .then((response) => {
             if (response.status === 200) {
               response.json().then((data) => {
-                const createdShortenurlDom = document.querySelector(
-                  "#shortenurl-info"
-                );
+                const createdShortenurlDom =
+                  document.querySelector("#shortenurl-info");
                 createdShortenurlDom.innerText = `
                   원본 url : ${data.originalUrl}
                   단축 url key : ${data.shortenedUrlKey}
                   사용 횟수 : ${data.redirectCount}
-                `
-             
+                `;
               });
             } else {
               alert("요청이 실패했습니다.");
@@ -42,5 +89,8 @@
         return false;
       }
     </script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="index.js"></script>
+    <script src="bootstrap.bundle.min.js"></script>
   </body>
 </html>
